@@ -1,7 +1,7 @@
 NAME = Bureaucrat
 COM = c++
 FLAG = -Wall -Wextra -Werror --std=c++98
-SRS = Bureaucrat.cpp main.cpp\
+SRS = Bureaucrat.cpp main.cpp Form.cpp Form.hpp\
 
 OBJ = $(SRS:.cpp=.o)
 
