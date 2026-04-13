@@ -25,17 +25,12 @@ void Bureaucrat::signForm(Form &form)
     try 
     {
         form.beSigned(*this);
+        std::cout << this->getName() << " signed " << form.getName() << std::endl;
     }
     catch(std::exception &e)
     {
-        std::cout << this->getName() << " couldn’t sign because" << e.what() << std::endl;
+        std::cout << this->getName() << " couldn’t sign "<< form.getName() << " because " << e.what() << std::endl;
     }
-    // form.beSigned(*this);
-    // if (form.getIndication_Sin())
-    //     std::cout << this->getName() << " signed " << form.getName() << std::endl;
-    // else
-    //     //<bureaucrat> couldn’t sign <form> because <reason>.
-    //     std::cout << this->getName() << " couldn’t sign because" << std::endl;
 }
 
 void Bureaucrat::increment_B()

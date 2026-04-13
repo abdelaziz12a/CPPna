@@ -1,9 +1,10 @@
 
 #include "Form.hpp"
+#include "Bureaucrat.hpp"
 
-Form::Form() : name_form("default"), grade_TO_EX(150), grade_TO_SIN(150) {}
+Form::Form() : name_form("default"), grade_TO_SIN(150), grade_TO_EX(150) {}
 
-Form::Form(std::string &Name, const int &G_tosing, const int &G_EX) : name_form(Name), grade_TO_EX(G_EX), grade_TO_SIN(G_tosing)
+Form::Form(const std::string &Name, const int &G_tosing, const int &G_EX) : name_form(Name), grade_TO_SIN(G_tosing), grade_TO_EX(G_EX)
 {
     Indicating_Sig = false;
     
@@ -36,6 +37,9 @@ int Form::getGradeEx() const
     return grade_TO_EX;
 }
 
+const char *Form::GradeTooHighException::what() const throw() { return "Grade too high!"; }
+const char *Form::GradeTooLowException::what()  const throw() { return "Grade too low!"; }
+
 ///members 
 void Form::beSigned(Bureaucrat &bureaucrat)
 {
@@ -44,12 +48,13 @@ void Form::beSigned(Bureaucrat &bureaucrat)
     else
         throw GradeTooLowException();
 }
-Form::~Form(){}
+Form::~Form() {}
 // operators
 
 std::ostream& operator<<(std::ostream &os, const Form &obj)
 {
-    os << " Form name: " <<obj.getName() << "\n Signed: " << obj.getIndication_Sin() << "\nGrade required to sign: "<< obj.getGradeSin() << "/nGrade required to execute: " << obj.getGradeEx() ; 
+    os << "Form name: " <<obj.getName() << "\nSigned: " << obj.getIndication_Sin() << "\nGrade required to sign: "<< obj.getGradeSin() << "\nGrade required to execute: " << obj.getGradeEx() ; 
+    return os;
 }
 
 

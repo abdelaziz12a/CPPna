@@ -1,8 +1,10 @@
 #ifndef FORM_HPP
 #define FORM_HPP
 
-#include <Bureaucrat.hpp>
+
 #include <iostream>
+
+class Bureaucrat;
 
 class Form 
 {
@@ -15,7 +17,7 @@ class Form
     public :
 
         Form();
-        Form(std::string &Name, const int &G_tosing, const int &G_EX);
+        Form(const std::string &Name, const int &G_tosing, const int &G_EX);
 
         //copy constructurn
         //copy assigment

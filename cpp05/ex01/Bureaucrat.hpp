@@ -2,7 +2,6 @@
 #ifndef BUREAURAT_HPP
 #define BUREAURAT_HPP
 
-
 #include <iostream>
 #include <Form.hpp>
 

@@ -1,7 +1,7 @@
 NAME = Bureaucrat
 COM = c++
 FLAG = -Wall -Wextra -Werror --std=c++98
-SRS = Bureaucrat.cpp main.cpp Form.cpp Form.hpp\
+SRS = Bureaucrat.cpp main.cpp Form.cpp\
 
 OBJ = $(SRS:.cpp=.o)
 
@@ -10,7 +10,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@$(COM) $(FLAG) $(OBJ) -o $@
 
-%.o: %.cpp Bureaucrat.hpp
+%.o: %.cpp Bureaucrat.hpp Form.hpp
 	@$(COM) $(FLAG) -c $< -o $@
 
 clean:
