@@ -12,13 +12,14 @@ class ShrubberyCreationForm : public AForm
 
     public :
     ShrubberyCreationForm();
-    ShrubberyCreationForm(std::string _target) : AForm("ShrubberyCreationForm",145,137), target(_target){}
+    ShrubberyCreationForm(std::string _target);
+
 
     //canoncal
     
     
-    virtual void execute(Bureaucrat const & executor);
-
+    void execute(Bureaucrat const & executor) const;
+    virtual ~ShrubberyCreationForm(){}
 };
 
 
