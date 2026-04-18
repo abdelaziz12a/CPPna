@@ -12,7 +12,7 @@ std::string PresidentialPardonForm::get_target() const { return (this->target);}
 
 void PresidentialPardonForm::execute(Bureaucrat const &executor) const 
 {
-    if (this->getGradeEx() < executor.getGrade() || this->getIndication_Sin())
+    if (!(this->getGradeEx() < executor.getGrade()) && this->getIndication_Sin())
     {
        std::cout << this->get_target() << " has been pardoned by Zaphod Beeblebrox" << std::endl;
     }

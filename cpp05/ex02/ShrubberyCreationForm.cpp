@@ -13,7 +13,8 @@ std::string ShrubberyCreationForm::get_target() const
 
 void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
-    if (this->getGradeEx() < executor.getGrade() || this->getIndication_Sin())
+    
+    if (!(this->getGradeEx() < executor.getGrade()) && this->getIndication_Sin())
     {
         std::ofstream file((this->get_target() + "_shrubbery").c_str());
 

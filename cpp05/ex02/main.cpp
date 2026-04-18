@@ -8,11 +8,11 @@
 int main()
 {
     // 👨‍💼 Bureaucrats
-    Bureaucrat high("High", 1);      // قوي بزاف
-    Bureaucrat mid("Mid", 100);      // متوسط
-    Bureaucrat low("Low", 150);      // ضعيف
+    Bureaucrat high("High", 1);     //powerfal
+    Bureaucrat mid("Mid", 71);      // midume
+    Bureaucrat low("Low", 150);      // week
 
-    // 🌳 1. Shrubbery → SUCCESS
+    // // 🌳 1. Shrubbery → SUCCESS
     // try
     // {
     //     ShrubberyCreationForm shrub("home");
@@ -26,31 +26,33 @@ int main()
 
     // std::cout << "---------------------\n";
 
-    // 🤖 2. Robotomy → FAIL (execution grade ضعيف)
-    try
-    {
-        RobotomyRequestForm robot("Bender");
-        mid.signForm(robot);        // ممكن يوقع
-        mid.executeForm(robot);     // غادي يفشل (grade ماكافيش)
-    }
-    catch (std::exception &e)
-    {
-        std::cout << "Robotomy error: " << e.what() << std::endl;
-    }
-
-    std::cout << "---------------------\n";
-
-    // // 👑 3. Presidential → FAIL (sign grade ضعيف)
+    //🤖 2. Robotomy → FAIL (execution grade ضعيف)
     // try
     // {
-    //     PresidentialPardonForm pres("Arthur Dent");
-    //     low.signForm(pres);         // غادي يفشل
-    //     high.executeForm(pres);     // حتى لو حاول، راه ما موقعاش
+    //     RobotomyRequestForm robot("Bender");
+    //     std::cout << mid.getGrade() << " " << robot.getGradeEx() << " " << robot.getGradeSin() << std::endl;
+    //     mid.signForm(robot);         // ممكن يوقع
+    //     mid.executeForm(robot);     // غادي يفشل (grade ماكافيش)
     // }
     // catch (std::exception &e)
     // {
-    //     std::cout << "Presidential error: " << e.what() << std::endl;
+    //     std::cout << "Robotomy error: " << e.what() << std::endl;
     // }
+
+    // std::cout << "---------------------\n";
+
+    // // 👑 3. Presidential → FAIL (sign grade ضعيف)
+    try
+    {
+        PresidentialPardonForm pres("Arthur Dent");
+        low.signForm(pres);         // غادي يفشل
+        high.executeForm(pres);
+               // حتى لو حاول، راه ما موقعاش
+    }
+    catch (std::exception &e)
+    {
+        std::cout << "Presidential error: " << e.what() << std::endl;
+    }
 
     // return 0;
 }

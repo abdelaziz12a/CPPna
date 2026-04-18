@@ -17,7 +17,7 @@ std::string RobotomyRequestForm::get_target() const
 
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
-    if (!(this->getGradeEx() < executor.getGrade()) || this->getIndication_Sin())
+    if (!(this->getGradeEx() < executor.getGrade()) && this->getIndication_Sin())
     {
         std::cout << this->getGradeEx() <<"  " << executor.getGrade() <<std::endl;
         std::cout << "..traq! ....traq!. traq!....\n" << this->get_target() << "has been robotomized successfully 50% of the time" << std::endl;

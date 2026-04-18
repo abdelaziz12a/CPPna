@@ -26,13 +26,13 @@ void Bureaucrat::executeForm(AForm const & form)
     try
     {
         form.execute(*this);
+        std::cout << this->getName() << " executed " << form.getName() << std::endl;
     }
     catch(std::exception& e)
     {
-        std::cout << e.what() << '\n';
+        std::cout << this->getName() << " couldn't execute "
+                  << form.getName() << " because " << e.what() << std::endl;
     }
-    std::cout << this->getName() << " executed " << form.getName() << std::endl;
-    
 }
 
 void Bureaucrat::signForm(AForm &form)
