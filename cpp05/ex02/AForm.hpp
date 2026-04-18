@@ -35,6 +35,11 @@ class AForm
                 const char * what() const throw();
                 
         };
+        class GradeOrSingExpaction : public std::exception
+        {
+            public:
+                const char* what() const throw();
+        };
         
         //members
         void beSigned(Bureaucrat &bureaucrat);
@@ -47,6 +52,9 @@ class AForm
         int getGradeEx() const;
 
         ~AForm();
+
+
+
 };
 
 std::ostream& operator<<(std::ostream &os, const AForm &obj);

@@ -3,7 +3,8 @@
 #define BUREAURAT_HPP
 
 #include <iostream>
-#include <Form.hpp>
+
+class AForm;
 
 class Bureaucrat
 {
@@ -31,11 +32,14 @@ class Bureaucrat
                 const char* what() const throw();
         };
 
+        
         std::string getName() const;
         int getGrade() const;
 
         void executeForm(AForm const & form);
-        void signForm(Form &form);
+        
+
+        void signForm(AForm &form);
 
         void increment_B();
         void decrement_B();

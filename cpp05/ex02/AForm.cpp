@@ -40,6 +40,8 @@ int AForm::getGradeEx() const
 const char *AForm::GradeTooHighException::what() const throw() { return "Grade too high!"; }
 const char *AForm::GradeTooLowException::what()  const throw() { return "Grade too low!"; }
 
+const char *AForm::GradeOrSingExpaction::what() const throw() { return "Grade to low or the form dos not singed!";}
+
 ///members
 void AForm::beSigned(Bureaucrat &bureaucrat)
 {
