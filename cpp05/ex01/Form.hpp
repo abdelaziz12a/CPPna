@@ -19,8 +19,9 @@ class Form
         Form();
         Form(const std::string &Name, const int &G_tosing, const int &G_EX);
 
-        //copy constructurn
-        //copy assigment
+        Form(const Form &other);
+        Form &operator=(const Form &other);
+
         
         class GradeTooHighException : public std::exception
         {

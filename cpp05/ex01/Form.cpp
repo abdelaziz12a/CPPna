@@ -18,6 +18,20 @@ Form::Form(const std::string &Name, const int &G_tosing, const int &G_EX) : name
     }
 }
 
+Form::Form(const Form &other)
+    : name_form(other.name_form),
+      Indicating_Sig(other.Indicating_Sig),
+      grade_TO_SIN(other.grade_TO_SIN),
+      grade_TO_EX(other.grade_TO_EX){}
+
+Form & Form::operator=(const Form &other)
+{
+    if (this != &other)
+    {
+        this->Indicating_Sig = other.Indicating_Sig;
+    }
+    return *this;
+}
 
 
 std::string Form::getName() const
