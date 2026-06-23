@@ -1,6 +1,6 @@
 #include "RobotomyRequestForm.hpp"
 #include "Bureaucrat.hpp"
-#include <ctime>
+
 #include <cstdlib> 
 
 RobotomyRequestForm::RobotomyRequestForm() : AForm()
@@ -36,7 +36,6 @@ void RobotomyRequestForm::execute(Bureaucrat const &executor) const
     if (executor.getGrade() > this->getGradeEx())
         throw GradeOrSingExpaction();
 
-    srand(time(0));
     std::cout << "..traq! ....traq!. traq!....\n";
     if (rand() % 2)
         std::cout << this->get_target() << " has been robotomized successfully!\n";

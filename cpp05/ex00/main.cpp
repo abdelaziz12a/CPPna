@@ -1,17 +1,22 @@
 #include "Bureaucrat.hpp"
 
 
-#include "Bureaucrat.hpp"
+
 
 int main()
 {
+
+   
     // Test normal (+)
     try {
         Bureaucrat b("Aziz", 2);
         std::cout << b << std::endl; //operator
-        b.increment_B();
-        std::cout << b << std::endl;
-        b.increment_B(); // GradeTooHighException
+
+
+
+        // b.increment_B();
+        // std::cout << b << std::endl;
+        // b.increment_B(); // GradeTooHighException
     }
     catch (std::exception &e) {
         std::cout << "Exception: " << e.what() << std::endl;

@@ -1,6 +1,6 @@
 
 #include "Animal.hpp"
-
+ 
 Animal::Animal()
 {
     type = "Animal";
@@ -20,6 +20,7 @@ Animal& Animal::operator=(const Animal&other)
         this->type = other.type;
     return *this;
 }
+ 
 void Animal::makeSound() const
 {
      std::cout << "Animal makes an unknown sound..." << std::endl;

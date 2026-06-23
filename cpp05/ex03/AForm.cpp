@@ -9,9 +9,10 @@ AForm::AForm(const std::string &Name, const int &G_tosing, const int &G_EX) : na
     Indicating_Sig = false;
     
     if (getGradeSin() > 150 || getGradeEx() > 150)
-        throw GradeTooHighException();
-    if (getGradeEx() < 1 || getGradeEx() < 1)
         throw GradeTooLowException();
+    if (getGradeSin() < 1 || getGradeEx() < 1)
+        throw GradeTooHighException();
+        
 }
 
 AForm::AForm(const AForm &other)
@@ -54,7 +55,7 @@ const char *AForm::GradeOrSingExpaction::what() const throw() { return "Grade to
 ///members
 void AForm::beSigned(Bureaucrat &bureaucrat)
 {
-    if (bureaucrat.getGrade() < this->getGradeSin())
+    if (bureaucrat.getGrade() <= this->getGradeSin())
         this->Indicating_Sig = true;
     else
         throw GradeTooLowException();

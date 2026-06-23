@@ -9,7 +9,7 @@ class Bureaucrat;
 class AForm 
 {
     private:
-        std::string name_Aform;
+        const std::string name_Aform;
         bool Indicating_Sig;
         const int grade_TO_SIN;
         const int grade_TO_EX;
@@ -51,7 +51,7 @@ class AForm
         int getGradeSin() const;
         int getGradeEx() const;
 
-        ~AForm();
+        virtual ~AForm();
 
 
 
