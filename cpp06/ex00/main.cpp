@@ -4,10 +4,10 @@
 
 int main(int ac, char **av)
 {
-    if (ac != 1)
+    if (ac != 2)
     {
-        std::cout << "Ivalid" << std::endl;
-        return 0;
+        std::cout << "Usage: ./convert literal" << std::endl;
+        return 1;
     }
     std::string str = av[1];
     ScalarConverter::convert(str);
