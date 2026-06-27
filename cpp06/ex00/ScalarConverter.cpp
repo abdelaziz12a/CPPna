@@ -127,7 +127,33 @@ e_type detectType(const std::string& str)
 
 void ScalarConverter::convert(const std::string &input)
 {
-    e_type type = detectType(input);
+    switch(detectType(input))
+    {
+        case CHAR:
+            char c = input[0];
+            std::cout << c << std::endl;
+            int i = static_cast<int>(c);
+            double d = static_cast<double>(c);
+            float f = static_cast<float>(c);
+
+
+
+            break;
+
+        case INT:
+        
+            break;
+
+        case FLOAT:
+        
+            break;
+
+        case DOUBLE:
+        
+            break;
+
+        
+    }
     
 
 }
