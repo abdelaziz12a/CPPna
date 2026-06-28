@@ -1,5 +1,6 @@
 #include "ScalarConverter.hpp"
 #include <limits>
+#include <limits.h>
 
 enum e_type
 {
@@ -164,58 +165,7 @@ void print_char(char c, bool unvalid)
         std::cout << "char : Non displayable" << std::endl;
 }
 
-void handel_char(const std::string input)
-{
-    //char
-    char c = input[0];
-    print_char(c, false);
-    //int
-    int i = static_cast<int>(c);
-    print_int(i, false);
-    //flout 
-    float f = static_cast<float>(c);
-    print_float(f, false);
-    //double
-    double d = static_cast<double>(c);
-    print_double(d, false);
-}
 
-void handel_int(long value)
-{
-    // char
-    if (value < std::numeric_limits<char>::min() ||
-        value > std::numeric_limits<char>::max())
-    {
-        print_char(0, true);
-    }
-    else
-    {
-        char c = static_cast<char>(value);
-        print_char(c, false);
-    }
-    // int
-    if (value < std::numeric_limits<int>::min() ||
-        value > std::numeric_limits<int>::max())
-    {
-        print_int(0, true);
-    }
-    else
-    {
-        int i = static_cast<int>(value);
-        print_int(i, false);
-    }
-    // float
-    float f = static_cast<float>(value);
-    print_float(f, false);
-    // double
-    double d = static_cast<double>(value);
-    print_double(d, false);
-}
-
-void handel_float(long f)
-{
-    
-}
 
 void ScalarConverter::convert(const std::string &input)
 {
@@ -223,19 +173,15 @@ void ScalarConverter::convert(const std::string &input)
     switch(detectType(input))
     {
         case CHAR:
-            handel_char(input);
+            
             break;
 
         case INT:
-            char *end;
-            long value = std::strtol(input.c_str(), &end, 10);
-            handel_int(value);
+            
             break;
 
         case FLOAT:
-            char *end;
-            long value = std::strtol(input.c_str(), &end, 10);
-            handel_float(value);
+            
             break;
 
         case DOUBLE:
