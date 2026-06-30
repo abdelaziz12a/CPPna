@@ -59,7 +59,22 @@ e_type detectType(const std::string& str)
 }
 
 
+void handelChar(const char c)
+{
+    if (isprint(c))
+        std::cout << "char : " << c << std::endl;
+    else 
+        std::cout << "char : inpossible\n";//fix
+    std::cout << "int :" << static_cast<int>(c) << std::endl;
+    std::cout << "int :" << static_cast<int>(c) << std::endl;
+    std::cout << "int :" << static_cast<int>(c) << std::endl;
+}
 
+void handelInt(const std::string &input)
+{
+    
+
+}
 
 
 
@@ -101,18 +116,20 @@ void ScalarConverter::convert(const std::string &input)
     }
     if (type == CHAR)
     {
-        
+        handelChar(input[0]);
     }
-        if (type == INT)
+    if (type == INT)
     {
-        //............
+        // handel_Int();
     }
-        if (type == FLOAT)
+    if (type == FLOAT)
     {
+        // handel_Float();
         //.............
     }
-        if (type == DOUBLE)
+    if (type == DOUBLE)
     {
+    
         //..............
     }
     if (type == INVALID)
