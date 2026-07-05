@@ -1,5 +1,6 @@
 #include "ScalarConverter.hpp"
 #include <limits>
+#include <iomanip>
 #include <limits.h>
 
 enum e_type
@@ -62,22 +63,72 @@ e_type detectType(const std::string& str)
 void handelChar(const char c)
 {
     if (isprint(c))
-        std::cout << "char : " << c << std::endl;
-    else 
-        std::cout << "char : inpossible\n";//fix
-    std::cout << "int :" << static_cast<int>(c) << std::endl;
-    std::cout << "int :" << static_cast<int>(c) << std::endl;
-    std::cout << "int :" << static_cast<int>(c) << std::endl;
+        std::cout << "char: '" << c << "'" << std::endl;
+    else
+        std::cout << "char: Non displayable" << std::endl;
+    std::cout << "int: " << static_cast<int>(c) << std::endl;
+    std::cout << std::fixed << std::setprecision(1);
+    std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
+    std::cout << "double: " << static_cast<double>(c) << std::endl;
 }
 
 void handelInt(const std::string &input)
 {
-    
+    char *end;
+    errno = 0;
+    long value = std::strtol(input.c_str(), &end, 10);
 
+    if (errno == ERANGE || value < INT_MIN || value > INT_MAX)
+    {
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        std::cout << "float: impossible" << std::endl;
+        std::cout << "double: impossible" << std::endl;
+        return;
+    }
+
+    int val = static_cast<int>(value);
+
+    // char
+    if (val < 0 || val > 127)
+        std::cout << "char: impossible" << std::endl;
+    else if (!isprint(val))
+        std::cout << "char: Non displayable" << std::endl;
+    else
+        std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
+
+    // int, float, double always print
+    std::cout << std::fixed << std::setprecision(1);
+    std::cout << "int: " << val << std::endl;
+    std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
+    std::cout << "double: " << static_cast<double>(val) << std::endl;
 }
 
+void handelFloat(const std::string &input)
+{
+    char *end;
+    errno = 0;
+    double value = strtod(input.c_str(), &end);
+    if (errno == ERANGE)
+    {
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        std::cout << "float: impossible" << std::endl;
+        std::cout << "double: impossible" << std::endl;
+        return;
+    }
+
+    float val = static_cast<float>(value);
+    
+
+    
 
 
+}
+void handeDouble(const std::string &input)
+{
+
+}
 
 
 
@@ -120,11 +171,11 @@ void ScalarConverter::convert(const std::string &input)
     }
     if (type == INT)
     {
-        // handel_Int();
+        handelInt(input);
     }
     if (type == FLOAT)
     {
-        // handel_Float();
+        handelFloat(input);
         //.............
     }
     if (type == DOUBLE)
