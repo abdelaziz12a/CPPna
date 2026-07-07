@@ -2,6 +2,9 @@
 #include <limits>
 #include <iomanip>
 #include <limits.h>
+#include <float.h>
+#include <cerrno> 
+#include <cstdlib>
 
 enum e_type
 {
@@ -15,18 +18,16 @@ enum e_type
 
 
 ScalarConverter::ScalarConverter(){}
-ScalarConverter::ScalarConverter(const ScalarConverter &other){}
-ScalarConverter& ScalarConverter::operator=(const ScalarConverter &other){}
+ScalarConverter::ScalarConverter(const ScalarConverter &){}
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter &){return *this;}
 ScalarConverter::~ScalarConverter(){}
 
 
 e_type detectType(const std::string& str)
 {
-    // Single non-digit character → char
     if (str.length() == 1 && !isdigit(str[0]) && !isprint(str[0]) == false)
         return CHAR;
 
-    // Pseudo literals
     if (str == "nan" || str == "nanf" ||
         str == "+inf" || str == "-inf" ||
         str == "+inff" || str == "-inff")
@@ -34,13 +35,11 @@ e_type detectType(const std::string& str)
 
     char *end;
 
-    // Try int via strtol
     errno = 0;
     strtol(str.c_str(), &end, 10);
     if (errno == 0 && *end == '\0')
         return INT;
 
-    // Try float: strtod on the string minus trailing 'f'
     if (str[str.length() - 1] == 'f')
     {
         std::string withoutF = str.substr(0, str.length() - 1);
@@ -50,7 +49,6 @@ e_type detectType(const std::string& str)
             return FLOAT;
     }
 
-    // Try double via strtod
     errno = 0;
     strtod(str.c_str(), &end);
     if (errno == 0 && *end == '\0' && str.find('.') != std::string::npos)
@@ -59,6 +57,13 @@ e_type detectType(const std::string& str)
     return INVALID;
 }
 
+void handelInvalid()
+{
+    std::cout << "char: impossible" << std::endl;
+    std::cout << "int: impossible" << std::endl;
+    std::cout << "float: impossible" << std::endl;
+    std::cout << "double: impossible" << std::endl;
+}
 
 void handelChar(const char c)
 {
@@ -66,6 +71,7 @@ void handelChar(const char c)
         std::cout << "char: '" << c << "'" << std::endl;
     else
         std::cout << "char: Non displayable" << std::endl;
+    
     std::cout << "int: " << static_cast<int>(c) << std::endl;
     std::cout << std::fixed << std::setprecision(1);
     std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
@@ -80,10 +86,7 @@ void handelInt(const std::string &input)
 
     if (errno == ERANGE || value < INT_MIN || value > INT_MAX)
     {
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: impossible" << std::endl;
-        std::cout << "double: impossible" << std::endl;
+        handelInvalid();
         return;
     }
 
@@ -97,7 +100,7 @@ void handelInt(const std::string &input)
     else
         std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
 
-    // int, float, double always print
+    // int, float, double 
     std::cout << std::fixed << std::setprecision(1);
     std::cout << "int: " << val << std::endl;
     std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
@@ -106,28 +109,72 @@ void handelInt(const std::string &input)
 
 void handelFloat(const std::string &input)
 {
+    std::string withoutF = input.substr(0, input.length() - 1);
     char *end;
     errno = 0;
-    double value = strtod(input.c_str(), &end);
-    if (errno == ERANGE)
+    double value = strtod(withoutF.c_str(), &end);
+
+    if (errno == ERANGE || value < -FLT_MAX || value > FLT_MAX)
     {
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: impossible" << std::endl;
-        std::cout << "double: impossible" << std::endl;
+        handelInvalid();
         return;
     }
 
-    float val = static_cast<float>(value);
-    
+    // char
+    if (value < 0 || value > 127)
+        std::cout << "char: impossible" << std::endl;
+    else if (!isprint(static_cast<int>(value)))
+        std::cout << "char: Non displayable" << std::endl;
+    else
+        std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
 
-    
+    // int
+    if (value < INT_MIN || value > INT_MAX)
+        std::cout << "int: impossible" << std::endl;
+    else
+        std::cout << "int: " << static_cast<int>(value) << std::endl;
 
-
+    // float and double
+    std::cout << std::fixed << std::setprecision(1);
+    std::cout << "float: " << static_cast<float>(value) << "f" << std::endl;
+    std::cout << "double: " << value << std::endl;
 }
-void handeDouble(const std::string &input)
-{
 
+void handelDouble(const std::string &input)
+{
+    char *end;
+    errno = 0;
+    double value = strtod(input.c_str(), &end);
+
+    if (errno == ERANGE || value < -DBL_MAX || value > DBL_MAX)
+    {
+        handelInvalid();
+        return;
+    }
+
+    // char
+    if (value < 0 || value > 127)
+        std::cout << "char: impossible" << std::endl;
+    else if (!isprint(static_cast<int>(value)))
+        std::cout << "char: Non displayable" << std::endl;
+    else
+        std::cout << "char: '" << static_cast<char>(value) << "'" << std::endl;
+
+    // int
+    if (value < INT_MIN || value > INT_MAX)
+        std::cout << "int: impossible" << std::endl;
+    else
+        std::cout << "int: " << static_cast<int>(value) << std::endl;
+
+    // float
+    std::cout << std::fixed << std::setprecision(1);
+    if (value < -FLT_MAX || value > FLT_MAX)
+        std::cout << "float: impossible" << std::endl;
+    else
+        std::cout << "float: " << static_cast<float>(value) << "f" << std::endl;
+
+    // double
+    std::cout << "double: " << value << std::endl;
 }
 
 
@@ -139,53 +186,37 @@ void handeDouble(const std::string &input)
 
 void ScalarConverter::convert(const std::string &input)
 {
-
     e_type type = detectType(input);
+
     if (type == PSEUDO)
     {
         if (input == "nan" || input == "nanf") {
-	        std::cout << "char: impossible" << std::endl;
-	        std::cout << "int: impossible" << std::endl; 
-	        std::cout << "float: nanf" << std::endl; 
-	        std::cout << "double: nan" << std::endl; 
-	        
-	    }
-	    else if (input == "+inf" || input == "+inff") { 
-	    	std::cout << "char: impossible" << std::endl; 
-	    	std::cout << "int: impossible" << std::endl; 
-	    	std::cout << "float: +inff" << std::endl; 
-	    	std::cout << "double: +inf" << std::endl; 
-	    	 
-	    } 
-	    else if (input == "-inf" || input == "-inff") { 
-	    	std::cout << "char: impossible" << std::endl; 
-	    	std::cout << "int: impossible" << std::endl; 
-	    	std::cout << "float: -inff" << std::endl; 
-	    	std::cout << "double: -inf" << std::endl; 
-	    	
-	    }
+            std::cout << "char: impossible" << std::endl;
+            std::cout << "int: impossible" << std::endl;
+            std::cout << "float: nanf" << std::endl;
+            std::cout << "double: nan" << std::endl;
+        }
+        else if (input == "+inf" || input == "+inff") {
+            std::cout << "char: impossible" << std::endl;
+            std::cout << "int: impossible" << std::endl;
+            std::cout << "float: +inff" << std::endl;
+            std::cout << "double: +inf" << std::endl;
+        }
+        else if (input == "-inf" || input == "-inff") {
+            std::cout << "char: impossible" << std::endl;
+            std::cout << "int: impossible" << std::endl;
+            std::cout << "float: -inff" << std::endl;
+            std::cout << "double: -inf" << std::endl;
+        }
     }
-    if (type == CHAR)
-    {
+    else if (type == CHAR)
         handelChar(input[0]);
-    }
-    if (type == INT)
-    {
+    else if (type == INT)
         handelInt(input);
-    }
-    if (type == FLOAT)
-    {
+    else if (type == FLOAT)
         handelFloat(input);
-        //.............
-    }
-    if (type == DOUBLE)
-    {
-    
-        //..............
-    }
-    if (type == INVALID)
-    {
-
-    }
-
+    else if (type == DOUBLE)
+        handelDouble(input);
+    else
+        handelInvalid();
 }
