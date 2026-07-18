@@ -5,7 +5,7 @@
 #include <float.h>
 #include <cerrno> 
 #include <cstdlib>
-
+    
 enum e_type
 {
     CHAR,
@@ -25,7 +25,7 @@ ScalarConverter::~ScalarConverter(){}
 
 e_type detectType(const std::string& str)
 {
-    if (str.length() == 1 && !isdigit(str[0]) && !isprint(str[0]) == false)
+    if (str.length() == 1 && !isdigit(str[0]))
         return CHAR;
 
     if (str == "nan" || str == "nanf" ||
@@ -80,9 +80,8 @@ void handelChar(const char c)
 
 void handelInt(const std::string &input)
 {
-    char *end;
     errno = 0;
-    long value = std::strtol(input.c_str(), &end, 10);
+    long value = std::strtol(input.c_str(), NULL, 10);
 
     if (errno == ERANGE || value < INT_MIN || value > INT_MAX)
     {
@@ -110,9 +109,8 @@ void handelInt(const std::string &input)
 void handelFloat(const std::string &input)
 {
     std::string withoutF = input.substr(0, input.length() - 1);
-    char *end;
     errno = 0;
-    double value = strtod(withoutF.c_str(), &end);
+    double value = strtod(withoutF.c_str(), NULL);
 
     if (errno == ERANGE || value < -FLT_MAX || value > FLT_MAX)
     {
@@ -142,9 +140,8 @@ void handelFloat(const std::string &input)
 
 void handelDouble(const std::string &input)
 {
-    char *end;
     errno = 0;
-    double value = strtod(input.c_str(), &end);
+    double value = strtod(input.c_str(), NULL);
 
     if (errno == ERANGE || value < -DBL_MAX || value > DBL_MAX)
     {
@@ -176,11 +173,6 @@ void handelDouble(const std::string &input)
     // double
     std::cout << "double: " << value << std::endl;
 }
-
-
-
-
-
 
 
 
