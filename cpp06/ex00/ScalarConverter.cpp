@@ -80,30 +80,26 @@ void handelChar(const char c)
 
 void handelInt(const std::string &input)
 {
-    errno = 0;
-    long value = std::strtol(input.c_str(), NULL, 10);
+   
+    std::stringstream ss(input);
+    int OrgInt;
 
-    if (errno == ERANGE || value < INT_MIN || value > INT_MAX)
+    ss >> OrgInt;
+    if (!ss.fail())
     {
         handelInvalid();
-        return;
+        return ;
     }
-
-    int val = static_cast<int>(value);
-
-    // char
-    if (val < 0 || val > 127)
+    //char 
+    if (OrgInt < 0 || OrgInt > 127)
         std::cout << "char: impossible" << std::endl;
-    else if (!isprint(val))
+    else if (!isprint(static_cast<int>(OrgInt)))
         std::cout << "char: Non displayable" << std::endl;
-    else
-        std::cout << "char: '" << static_cast<char>(val) << "'" << std::endl;
-
     // int, float, double 
     std::cout << std::fixed << std::setprecision(1);
-    std::cout << "int: " << val << std::endl;
-    std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
-    std::cout << "double: " << static_cast<double>(val) << std::endl;
+    std::cout << "int: " << OrgInt << std::endl;
+    std::cout << "float: " << static_cast<float>(OrgInt) << "f" << std::endl;
+    std::cout << "double: " << static_cast<double>(OrgInt) << std::endl;
 }
 
 void handelFloat(const std::string &input)
